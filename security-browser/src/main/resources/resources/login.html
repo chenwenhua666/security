@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>欢迎登录</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 150px;
+            padding-bottom: 60px;
+            /*background-image: url("/static/1.jpeg");*/
+            /*background: url(http://img1.imgtn.bdimg.com/it/u=1763624172,3531376775&fm=26&gp=0.jpg) no-repeat;*/
+            /*background-size: contain;
+            background-position: center;*/
+        }
+
+        .form-signin {
+            max-width: 420px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+            /*color: white;*/
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type="text"] {
+            margin-bottom: 5px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .code-image {
+            margin-left: 18px;
+            width: 80px;
+            height: 42px;
+        }
+
+        .form-signin-heading {
+            margin-left: 80px;
+        }
+
+        /* .characterColor {
+             color: white;
+         }*/
+    </style>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin form-system" action="/authentication/formLogin" method="post" id="form-system">
+        <h2 class="form-signin-heading">系统登录</h2>
+        <table>
+            <tr>
+                <td><label for="username" class="characterColor">用户名：</label></td>
+                <td><input type="text" id="username" name="username" class="form-control" placeholder="请输入用户名" required
+                           autofocus>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password" class="characterColor">密码：</label></td>
+                <td><input type="password" id="password" name="password" class="form-control" placeholder="请输入密码"
+                           required></td>
+            </tr>
+            <tr>
+                <td><label class="characterColor">验证码：</label></td>
+                <td><input type="text" name="imageCode" id="imageCode" class="form-control" placeholder="请输入验证码"
+                           required>
+                </td>
+                <td><img src="/code/image" class="code-image"></td>
+            </tr>
+        </table>
+        <div class="checkbox form-signin-heading">
+            <label>
+                <input type="checkbox" value="true" name="remember-me"> 记住我
+            </label>
+            <label>
+                <a href="javascript:void(0);" onClick="change()" class="characterColor">手机号登录</a>
+            </label>
+            <label>
+                <a href="/qqLogin/callback">QQ登录</a>
+                <a href="/qqLogin/weixin">微信登录</a>
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+
+    <form class="form-signin form-phone" action="/authentication/phone" method="post" id="form-phone">
+        <h2 class="form-signin-heading">短信登录</h2>
+        <table>
+            <tr>
+                <td><label for="phoneNumber" class="characterColor">手机号：</label></td>
+                <td><input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="请输入手机号"
+                           required autofocus>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="smsCode" class="characterColor">短信验证码：</label></td>
+                <td><input type="text" name="smsCode" id="smsCode" class="form-control"></td>
+                <td><a href="javascript:void(0);" onClick="send()" class="characterColor">发送验证码</a></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>
+                        <a href="javascript:void(0);" onClick="change(1)">账号登录</a>
+                    </label>
+                </td>
+            </tr>
+        </table>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#form-phone").hide()
+    });
+
+    function change(val) {
+        if (val === 1) {
+            $("#form-system").show();
+            $("#form-phone").hide();
+        } else {
+            $("#form-system").hide();
+            $("#form-phone").show();
+        }
+
+    }
+
+    function send() {
+        var phoneNumber = $("#phoneNumber").val();
+        $.ajax({
+            type: "GET",
+            url: "/code/sms",
+            dataType: "json",
+            data: {
+                phoneNumber: phoneNumber
+            },
+            success: function (data) {
+
+            }
+        })
+    }
+</script>
+</body>
+</html>

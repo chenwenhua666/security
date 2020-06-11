@@ -1,0 +1,58 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/sell?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.2.135
+    port: 6379
+server:
+  port: 8081
+  session:
+    timeout: 1800
+#security:
+#  basic:
+#    enabled: false
+plm:
+  security:
+    browser:
+      #loginPage: /demo-login.html
+      loginType: JSON
+      signUpUrl: /demo-signUp.html
+      signOutUrl: /demo-signOut.html
+    #code:
+      #image:
+        #length: 4
+        #url: /user/*
+    social:
+      qq:
+        app-id: 101278740
+        app-secret: a3fa1b9a6d7460157bbec0a31c51fd18
+        providerId: callback
+      filterProcessesUrl: /qqLogin
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4
+    oauth2:
+      clients[0]:
+        clientId: plm
+        clientSecret: plmSecret
+        accessTokenValiditySeconds: 3600
+        authorizedGrantTypes: refresh_token,password
+        scopes: all,read,write
+      clients[1]:
+        clientId: test
+        clientSecret: test
+        accessTokenValiditySeconds: 3600
+        authorizedGrantTypes: refresh_token,password
+        scopes: read,write
+#security:
+  #oauth2:
+    #client:
+      #client-id: plm
+      #client-secret: plmSecret
